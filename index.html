@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FICHA - Seleção de Galpão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7b702;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .galpao {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .galpao:hover {
+            background-color: #218838;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .voltar {
+            background-color: #dc3545;
+            margin-top: 20px;
+        }
+        .voltar:hover {
+            background-color: #c82333;
+        }
+        .resultado {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .caixa-resultado {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .caixa-resultado p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="telaGalpoes">
+        <h1>Selecione o Galpão</h1>
+        <button class="galpao" onclick="irParaCalculo('GALPÃO 49')">GALPÃO 49</button>
+        <button class="galpao" onclick="irParaCalculo('GALPÃO 50')">GALPÃO 50</button>
+        <button class="galpao" onclick="irParaCalculo('GALPÃO 51')">GALPÃO 51</button>
+        <button class="galpao" onclick="irParaCalculo('GALPÃO 52')">GALPÃO 52</button>
+        <button class="galpao" onclick="irParaCalculo('GALPÃO 53')">GALPÃO 53</button>
+        <button class="galpao" onclick="irParaCalculo('GALPÃO 54')">GALPÃO 54</button>
+    </div>
+
+    <div class="container" id="telaCalculo" style="display: none;">
+        <h1>Ficha Diária - <span id="numeroGalpao"></span></h1>
+        <form id="formulario">
+            <input type="number" id="estoqueInicial" placeholder="Estoque Inicial" required>
+            <input type="number" id="entrada" placeholder="Entrada" required>
+            <input type="number" id="consumo" placeholder="Consumo" required>
+            <input type="number" id="avesAtuais" placeholder="Número de Aves Atuais" required>
+            <input type="number" id="avesMortas" placeholder="Aves Mortas Diárias" required>
+            <button type="button" onclick="calcular()">Calcular</button>
+        </form>
+        <div class="resultado">
+            <div class="caixa-resultado">
+                <p id="estoqueFinal">Estoque Final: </p>
+            </div>
+            <div class="caixa-resultado">
+                <p id="avesRestantes">Aves Restantes: </p>
+            </div>
+        </div>
+        <button class="voltar" onclick="voltarParaGalpoes()">Voltar</button>
+    </div>
+
+    <script>
+        function irParaCalculo(galpao) {
+            document.getElementById('telaGalpoes').style.display = 'none';
+            document.getElementById('telaCalculo').style.display = 'block';
+            document.getElementById('numeroGalpao').innerText = galpao;
+        }
+
+        function voltarParaGalpoes() {
+            document.getElementById('telaCalculo').style.display = 'none';
+            document.getElementById('telaGalpoes').style.display = 'block';
+            document.getElementById('estoqueFinal').innerText = 'Estoque Final: ';
+            document.getElementById('avesRestantes').innerText = 'Aves Restantes: ';
+        }
+
+        function calcular() {
+            const estoqueInicial = parseFloat(document.getElementById('estoqueInicial').value);
+            const entrada = parseFloat(document.getElementById('entrada').value);
+            const consumo = parseFloat(document.getElementById('consumo').value);
+            const avesAtuais = parseInt(document.getElementById('avesAtuais').value);
+            const avesMortas = parseInt(document.getElementById('avesMortas').value);
+            const estoqueFinal = estoqueInicial + entrada - consumo;
+            const avesRestantes = avesAtuais - avesMortas;
+            document.getElementById('estoqueFinal').innerText = `Estoque Final: ${estoqueFinal}`;
+            document.getElementById('avesRestantes').innerText = `Aves Restantes: ${avesRestantes}`;
+        }
+    </script>
+</body>
+</html>
